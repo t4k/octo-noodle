@@ -53,4 +53,6 @@ jobs:
         run: if [[ ${{ steps.commit.outputs.changes }} == "true" ]];
           then
             echo "we have changes";
+          else
+            exit 0;
           fi
