@@ -46,7 +46,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
       - name: Commit changes
         id: commit
-        run: if [ -n "$(git ls-files --others --modified)" ];
+        run: echo "changes=false" >> $GITHUB_OUTPUT;
+          if [ -n "$(git ls-files --others --modified)" ];
           then
             git ls-files --others --modified | xargs git add --all;
             git commit -m "update notices fragments";
