@@ -1,0 +1,77 @@
+name: Build & Deploy Notices
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.commit.outputs.value }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # in order to determine changed files
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install arrow beautifulsoup4 bleach feedparser
+      - name: Create fragments directory
+        run: mkdir -p fragments/notices
+      - name: 🐞 python --version
+        run: python --version
+      - name: Parse TEST RSS with Python
+        run: python .github/workflows/notices.py "https://libcal.caltech.edu/rss.php?cid=5754&m=day"
+      - name: Generate fragments/notices/index.html with tree
+        run: tree -H '.' -L 1 --noreport --charset utf-8 -o fragments/notices/index.html fragments/notices
+      - name: Configure Git identity
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+      - name: Commit changes
+        id: commit
+        run: if [ -n "$(git ls-files --others --modified)" ];
+          then
+            git ls-files --others --modified | xargs git add --all;
+            git commit -m "update notices fragments";
+            echo "value=true" >> $GITHUB_OUTPUT;
+          fi
+
+  deploy:
+    needs: build
+    if: ${{needs.build.outputs.changes}} == "true"
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload only a specific directory
+          path: 'fragments'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
