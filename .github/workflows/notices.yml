@@ -1,4 +1,4 @@
-name: Build Notices
+name: Build & Deploy Notices
 on:
   schedule:
     - cron: '* * * * *'
@@ -40,7 +40,7 @@ jobs:
       - name: 🐞 python --version
         run: python --version
 
-      - name: Parse TEST RSS with Python
+      - name: Build notices fragments from TEST RSS feed
         run: python .github/workflows/notices.py "https://libcal.caltech.edu/rss.php?cid=5754&m=day"
 
       - name: Generate fragments/notices/index.html with tree
