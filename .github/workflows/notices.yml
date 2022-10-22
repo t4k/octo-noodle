@@ -8,6 +8,10 @@ permissions:
   contents: write
   pages: write
   id-token: write
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 jobs:
   notices:
     runs-on: ubuntu-latest
