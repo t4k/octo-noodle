@@ -42,7 +42,7 @@ jobs:
             git ls-files --others --modified | xargs git add --all;
             git commit -m "update notices fragments";
             git push;
-            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "changes=true" >> $GITHUB_OUTPUT;
           fi
       - name: Test output
         run: if [[ ${{ steps.commit.outputs.changes }} == "true" ]];
