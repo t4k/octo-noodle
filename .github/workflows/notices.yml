@@ -58,9 +58,5 @@ jobs:
             echo "changes=true" >> $GITHUB_OUTPUT;
           fi
       - name: Test output
-        run: if [[ ${{ steps.commit.outputs.changes }} == "true" ]];
-          then
-            echo "we have changes";
-          else
-            exit 0;
-          fi
+        if: steps.commit.outputs.changes == 'true'
+        run: echo "we have changes"
