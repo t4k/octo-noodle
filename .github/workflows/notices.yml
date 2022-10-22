@@ -52,6 +52,7 @@ jobs:
           then
             git ls-files --others --modified | xargs git add --all;
             git commit -m "update notices fragments";
+            git push;
             echo "value=true" >> $GITHUB_OUTPUT;
           fi
 
