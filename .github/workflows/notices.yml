@@ -41,12 +41,6 @@ jobs:
             git ls-files --others | xargs git add --all;
             git commit -m "🟢 add files";
           fi
-      - name: Commit deleted files
-        run: if [ -n "$(git ls-files --deleted)" ];
-          then
-            git ls-files --deleted | xargs git add --all;
-            git commit -m "🔴 remove files";
-          fi
       - name: Commit modified files
         run: if [ -n "$(git ls-files --modified)" ];
           then
