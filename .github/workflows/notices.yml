@@ -43,6 +43,9 @@ jobs:
       - name: Parse TEST RSS with Python
         run: python .github/workflows/notices.py "https://libcal.caltech.edu/rss.php?cid=5754&m=day"
 
+      - name: Generate fragments/notices/index.html with tree
+        run: tree -H '.' -L 1 --noreport --charset utf-8 -o fragments/notices/index.html fragments/notices
+
       - name: Configure Git identity
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -57,9 +60,6 @@ jobs:
             git push;
             echo "changes=true" >> $GITHUB_OUTPUT;
           fi
-      - name: Test output
-        if: steps.commit.outputs.changes == 'true'
-        run: echo "we have changes"
       - name: Setup Pages
         if: steps.commit.outputs.changes == 'true'
         uses: actions/configure-pages@v2
