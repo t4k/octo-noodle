@@ -7,7 +7,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -48,7 +48,6 @@ jobs:
           then
             git ls-files --others --modified | xargs git add --all;
             git commit -m "update notices fragments";
-            git push;
             echo "value=true" >> $GITHUB_OUTPUT;
           fi
 
