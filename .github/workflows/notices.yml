@@ -4,7 +4,7 @@ on:
     - cron: '* * * * *'
   workflow_dispatch:
 jobs:
-  build:
+  notices:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,9 +36,16 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
       - name: Commit changes
+        id: commit
         run: if [ -n "$(git ls-files --others --modified)" ];
           then
             git ls-files --others --modified | xargs git add --all;
             git commit -m "update notices fragments";
             git push;
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Test output
+        run: if [[ ${{ steps.commit.outputs.changes }} == "true" ]];
+          then
+            echo "we have changes";
           fi
