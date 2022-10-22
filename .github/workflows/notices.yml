@@ -40,6 +40,7 @@ jobs:
           then
             git ls-files --others | xargs git add --all;
             git commit -m "🟢 add files";
+            git push;
           fi
       - name: Commit modified files
         run: if [ -n "$(git ls-files --modified)" ];
