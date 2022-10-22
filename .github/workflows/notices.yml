@@ -42,10 +42,6 @@ jobs:
         run: python .github/workflows/notices.py "https://libcal.caltech.edu/rss.php?cid=5754&m=day"
       - name: Generate fragments/notices/index.html with tree
         run: tree -H '.' -L 1 --noreport --charset utf-8 -o fragments/notices/index.html fragments/notices
-      - name: Configure Git identity
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
       - name: Commit changes
         id: commit
         run: if [ -n "$(git ls-files --others --modified)" ];
