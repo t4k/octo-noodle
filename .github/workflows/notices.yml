@@ -15,6 +15,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.commit.outputs.changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -49,17 +51,17 @@ jobs:
           git config --global user.name "github-actions[bot]"
       - name: Commit changes
         id: commit
-        run: echo "changes=false" >> $GITHUB_OUTPUT;
+        run: echo "changed=false" >> $GITHUB_OUTPUT;
           if [ -n "$(git ls-files --others --modified)" ];
           then
             git ls-files --others --modified | xargs git add --all;
             git commit -m "update notices fragments";
             git push;
-            echo "changes=true" >> $GITHUB_OUTPUT;
+            echo "changed=true" >> $GITHUB_OUTPUT;
           fi
   deploy:
     needs: build
-    if: steps.commit.outputs.changes == 'true'
+    if: needs.build.outputs.changes == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
