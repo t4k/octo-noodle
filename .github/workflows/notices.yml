@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
+  contents: write  # write is required to commit changes
   pages: write
   id-token: write
-# Allow one concurrent deployment
+# Allow one concurrent deployment to GitHub Pages
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -40,6 +40,7 @@ jobs:
       - name: 🐞 python --version
         run: python --version
 
+      # TODO use a secret for the URL so this workflow is completely reusable
       - name: Build notices fragments from TEST RSS feed
         run: python .github/workflows/notices.py "https://libcal.caltech.edu/rss.php?cid=5754&m=day"
 
@@ -60,6 +61,8 @@ jobs:
             git push;
             echo "changes=true" >> $GITHUB_OUTPUT;
           fi
+      # TODO move pages deployment to an independent workflow
+      # if other workflows ever need to publish fragments
       - name: Setup Pages
         if: steps.commit.outputs.changes == 'true'
         uses: actions/configure-pages@v2
