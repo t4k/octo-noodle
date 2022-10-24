@@ -41,7 +41,7 @@ jobs:
         run: python --version
 
       - name: Build notices fragments from TEST RSS feed
-        run: python .github/workflows/notices.py ${{ secrets.LIBCAL_NOTICES_RSS_URL }}
+        run: python .github/workflows/notices.py ${{ secrets.LIBCAL_RSS_NOTICES_TODAY_URL }}
 
       - name: Generate fragments/notices/index.html with tree
         run: tree -H '.' -L 1 --noreport --charset utf-8 -o fragments/notices/index.html fragments/notices

@@ -7,7 +7,7 @@ import feedparser
 from bs4 import BeautifulSoup
 
 if len(sys.argv) == 1:
-    raise RuntimeError("❓ MISSING ARGUMENT: LIBCAL_NOTICES_RSS_URL")
+    raise RuntimeError("❓ MISSING ARGUMENT: LIBCAL_RSS_NOTICES_TODAY_URL")
 
 notices = feedparser.parse(sys.argv[1])
 
