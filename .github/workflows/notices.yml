@@ -1,7 +1,7 @@
 name: Build & Deploy Notices
 on:
   schedule:
-    - cron: '9 9 * * *'
+    - cron: '* * * * *'
   workflow_dispatch:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
