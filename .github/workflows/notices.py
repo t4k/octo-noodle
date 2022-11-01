@@ -76,9 +76,15 @@ def evaluate_entry(entry):
 
 
 with open("fragments/notices/archives.html", "w") as fp:
-    for entry in archives_entries:
-        fp.write(evaluate_entry(entry))
+    if archives_entries:
+        for entry in archives_entries:
+            fp.write(evaluate_entry(entry))
+    else:
+        fp.write("<!-- NO NOTICES -->")
 
 with open("fragments/notices/library.html", "w") as fp:
-    for entry in library_entries:
-        fp.write(evaluate_entry(entry))
+    if library_entries:
+        for entry in library_entries:
+            fp.write(evaluate_entry(entry))
+    else:
+        fp.write("<!-- NO NOTICES -->")
