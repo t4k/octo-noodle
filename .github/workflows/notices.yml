@@ -58,8 +58,8 @@ jobs:
             git commit -m "update notices fragments";
             git push;
             echo "changed=true" >> $GITHUB_OUTPUT;
-          fi
-          git log -1
+          fi;
+          git log -1;
   deploy:
     needs: build
     if: needs.build.outputs.changes == 'true'
