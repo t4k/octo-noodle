@@ -33,16 +33,19 @@ jobs:
         with:
           name: compile-${{ github.sha }}
           path: artifacts
-      - run: |
-          ls && tree
-      # - name: Deploy artifacts
-      #   id: deploy
-      #   # NOTE: the LIBGUIDES_GROUPS secret must be single-quoted because it
-      #   # contains JSON like `{"groups":[{"slug":"foo","id":"999"},{…}]}`
-      #   run: |
-      #     echo "STATUS=$(python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}')" >> $GITHUB_OUTPUT
-      # - name: Check deploy output
-      #   if: ${{ steps.deploy.outputs.STATUS }}
-      #   run: |
-      #     echo ${{ steps.deploy.outputs.STATUS }}
-      #     exit 1
+      - name: Deploy artifacts
+        id: deploy
+        # NOTE: the LIBGUIDES_GROUPS secret must be single-quoted because it
+        # contains JSON like `{"groups":[{"slug":"foo","id":"999"},{…}]}`
+        run: |
+          echo "STATUS=$(python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}')" >> $GITHUB_OUTPUT
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: deploy-${{ github.sha }}
+          path: playwright
+      - name: Check deploy output
+        if: ${{ steps.deploy.outputs.STATUS }}
+        run: |
+          echo ${{ steps.deploy.outputs.STATUS }}
+          exit 1
