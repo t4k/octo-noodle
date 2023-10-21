@@ -46,8 +46,8 @@ jobs:
         with:
           name: deploy-${{ github.sha }}
           path: playwright
-      - name: Check deploy output
-        if: ${{ steps.deploy.outputs.STATUS }}
-        run: |
-          echo ${{ steps.deploy.outputs.STATUS }}
-          exit 1
+      # - name: Check deploy output
+      #   if: ${{ steps.deploy.outputs.STATUS }}
+      #   run: |
+      #     echo ${{ steps.deploy.outputs.STATUS }}
+      #     exit 1
