@@ -1,0 +1,9 @@
+$branding-primary-color: rebeccapurple;
+$branding-font-size: 2rem;
+
+header {
+  .branding {
+    color: $branding-primary-color;
+    font-size: $branding-font-size;
+  }
+}
