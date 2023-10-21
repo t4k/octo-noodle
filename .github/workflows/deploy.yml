@@ -32,8 +32,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: compile-${{ github.sha }}
+          path: artifacts
       - run: |
-          ls
+          ls && tree
       # - name: Deploy artifacts
       #   id: deploy
       #   # NOTE: the LIBGUIDES_GROUPS secret must be single-quoted because it
