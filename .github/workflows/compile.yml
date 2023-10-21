@@ -1,12 +1,6 @@
 name: Compile Artifacts
 
 on:
-    push:
-      paths:
-        - "**.scss"
-        - "*.js"
-        - "*.html"
-        - "*.shtm"
     workflow_call:
 
 jobs:
