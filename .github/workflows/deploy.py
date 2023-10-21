@@ -30,10 +30,10 @@ def main(
                     p.click("#s-lg-admin-command-bar a:text('Admin')")
                     p.click("#s-lg-admin-command-bar a:text('Look & Feel')")
                     p.click("#s-lib-admin-tabs a:text('Custom JS/CSS')")
-                    print("🐞2")
-                    p.screenshot(path="playwright/screenshot2.png")
                     p.click("#s-lg-include-files_link")
                     p.set_input_files("#include_file", item.path)
+                    print("🐞2")
+                    p.screenshot(path="playwright/screenshot2.png")
                 elif item.name.endswith(".html"):
                     target = item.name.split("-")[0]
                     with open(item) as f:
@@ -191,11 +191,11 @@ def main(
                                     p.wait_for_selector(
                                         "#s-lg-btn-save-footer.btn-success"
                                     )
-                print("🐞3")
                 p.screenshot(path="playwright/screenshot3.png")
                 p.close()
                 b.close()
             except PlaywrightTimeoutError as e:
+                print("🐞e")
                 p.close()
                 b.close()
                 print(f"PLAYWRIGHT_TIMEOUT: {item.name}", end="")
