@@ -149,6 +149,7 @@ def main(
                         else:
                             for group in json.loads(libguides_groups)["groups"]:
                                 if variant == group["slug"]:
+                                    print("🐞", group["slug"])
                                     p.goto(
                                         f'/libguides/groups.php?action=2&group_id={group["id"]}'
                                     )
@@ -156,6 +157,7 @@ def main(
                                     p.click("#banner_html + .btn-primary")
                                     # NOTE must wait for success before moving on
                                     p.wait_for_selector("#banner_html + .btn-success")
+                                    print("🐞 #banner_html + .btn-success seen")
                     elif target == "footer":
                         variant = item.name.split(".")[0].split("-")[-1]
                         if variant == "system":
