@@ -33,6 +33,7 @@ jobs:
         with:
           name: compile-${{ github.sha }}
           path: artifacts
+      - run: mkdir playwright
       - name: Deploy artifacts
         id: deploy
         # NOTE: the LIBGUIDES_GROUPS secret must be single-quoted because it
