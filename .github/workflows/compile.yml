@@ -27,7 +27,7 @@ jobs:
           pip install plac
           export SASS_VERSION=1.53.0
           curl --silent --show-error --location https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/dart-sass-${SASS_VERSION}-linux-x64.tar.gz | tar --extract --gzip
-          mv dart-sass /usr/local/bin
+          mv dart-sass/sass /usr/local/bin
       - name: Create artifacts directory
         run: mkdir -p artifacts
       - name: Compile artifacts from changed files
