@@ -128,10 +128,10 @@ def main(
                             p.fill("#instmeta", html)
                             p.click("#instmeta ~ button")
                         else:
-                            for group in json.loads(libguides_groups)["groups"]:
-                                if variant == group["slug"]:
+                            for group in libguides_groups.split(","):
+                                if variant == group.split(":")[0]:
                                     p.goto(
-                                        f'/libguides/groups.php?action=3&group_id={group["id"]}'
+                                        f'/libguides/groups.php?action=3&group_id={group.split(":")[1]}'
                                     )
                                     p.fill("#jscss_code", html)
                                     p.click("#s-lg-btn-save-jscss")
@@ -147,11 +147,11 @@ def main(
                             p.click("#banner_html + .btn-primary")
                             # TODO LibAnswers & LibCal
                         else:
-                            for group in json.loads(libguides_groups)["groups"]:
-                                if variant == group["slug"]:
-                                    print("🐞", group["slug"])
+                            for group in libguides_groups.split(","):
+                                if variant == group.split(":")[0]:
+                                    print("🐞", group.split(":")[0])
                                     p.goto(
-                                        f'/libguides/groups.php?action=2&group_id={group["id"]}'
+                                        f'/libguides/groups.php?action=2&group_id={group.split(":")[1]}'
                                     )
                                     p.fill("#banner_html", html)
                                     p.click("#banner_html + .btn-primary")
@@ -181,10 +181,10 @@ def main(
                             p.fill("#instfooter", html)
                             p.click("#instfooter ~ button")
                         else:
-                            for group in json.loads(libguides_groups)["groups"]:
-                                if variant == group["slug"]:
+                            for group in libguides_groups.split(","):
+                                if variant == group.split(":")[0]:
                                     p.goto(
-                                        f'/libguides/groups.php?action=2&group_id={group["id"]}'
+                                        f'/libguides/groups.php?action=2&group_id={group.split(":")[1]}'
                                     )
                                     p.click("#s-lg-footer_link")
                                     p.fill("#footer_code", html)

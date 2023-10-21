@@ -63,7 +63,7 @@ def main(
                 f.write(html)
         elif component == "header" or component == "footer":
             # NOTE libguides_groups is set in a GitHub Actions secret
-            slugs = [g["slug"] for g in json.loads(libguides_groups)["groups"]]
+            slugs = [g.split(":")[0] for g in libguides_groups.split(",")]
             slugs.append("system")
             variants = list(slugs)
             variant = (
