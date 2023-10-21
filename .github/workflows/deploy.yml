@@ -39,7 +39,8 @@ jobs:
         # NOTE: the LIBGUIDES_GROUPS secret must be single-quoted because it
         # contains JSON like `{"groups":[{"slug":"foo","id":"999"},{…}]}`
         run: |
-          echo "STATUS=$(python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}')" >> $GITHUB_OUTPUT
+          # echo "STATUS=$(python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}')" >> $GITHUB_OUTPUT
+          python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}'
       - run: tree
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
