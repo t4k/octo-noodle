@@ -19,6 +19,8 @@ def main(
                 b = playwright.firefox.launch()
                 p = b.new_page(base_url=admin_base_url, record_video_dir="playwright")
                 p.goto("/libapps/login.php")
+                print("🐞1")
+                p.screenshot(path="playwright/screenshot1.png")
                 p.fill("#s-libapps-email", admin_username)
                 p.fill("#s-libapps-password", admin_password)
                 p.click("#s-libapps-login-button")
@@ -28,6 +30,8 @@ def main(
                     p.click("#s-lg-admin-command-bar a:text('Admin')")
                     p.click("#s-lg-admin-command-bar a:text('Look & Feel')")
                     p.click("#s-lib-admin-tabs a:text('Custom JS/CSS')")
+                    print("🐞2")
+                    p.screenshot(path="playwright/screenshot2.png")
                     p.click("#s-lg-include-files_link")
                     p.set_input_files("#include_file", item.path)
                 elif item.name.endswith(".html"):
@@ -187,6 +191,8 @@ def main(
                                     p.wait_for_selector(
                                         "#s-lg-btn-save-footer.btn-success"
                                     )
+                print("🐞3")
+                p.screenshot(path="playwright/screenshot3.png")
                 b.close()
             except PlaywrightTimeoutError as e:
                 b.close()
