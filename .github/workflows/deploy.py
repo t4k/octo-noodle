@@ -17,7 +17,7 @@ def main(
         with sync_playwright() as playwright:
             try:
                 b = playwright.firefox.launch()
-                p = b.new_page(base_url=admin_base_url, record_video_dir="playwright")
+                p = b.new_page(base_url=admin_base_url, record_video_dir="playwright/")
                 p.goto("/libapps/login.php")
                 print("🐞1")
                 p.screenshot(path="playwright/screenshot1.png")
@@ -193,8 +193,10 @@ def main(
                                     )
                 print("🐞3")
                 p.screenshot(path="playwright/screenshot3.png")
+                p.close()
                 b.close()
             except PlaywrightTimeoutError as e:
+                p.close()
                 b.close()
                 print(f"PLAYWRIGHT_TIMEOUT: {item.name}", end="")
                 sys.exit()
