@@ -12,6 +12,7 @@ on:
 jobs:
   compile:
     uses: ./.github/workflows/compile.yml
+    secrets: inherit
   deploy:
     runs-on: ubuntu-latest
     needs: compile
