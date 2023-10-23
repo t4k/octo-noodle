@@ -22,7 +22,7 @@ jobs:
           pip install pytest-playwright
       - name: Run your tests
         env:
-          LARGE_SECRET_PASSPHRASE: correct-horse-battery-staple
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
         run: pytest --slowmo 100 --video on --output artifacts -sv .github/workflows/playwrong.py
       - name: Upload artifacts
         uses: actions/upload-artifact@v3

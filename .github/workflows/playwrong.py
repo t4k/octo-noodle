@@ -2,7 +2,7 @@ import os
 from playwright.sync_api import Page, expect
 
 def test_get_started_link(page: Page):
-    print(f"🐞 os.environ: {os.environ}")
+    print(f'🐞 os.environ.get("SUPER_SECRET"): {os.environ.get("SUPER_SECRET")}')
     page.goto("https://playwright.dev/")
 
     # Click the get started link.
