@@ -66,11 +66,13 @@ def main(
             slugs = [g.split(":")[0] for g in libguides_groups.split(",")]
             slugs.append("system")
             variants = list(slugs)
+            print(f"🐞 variants: {variants}")
             variant = (
                 file.split(".")[0].split("-")[-1]
                 if file.split(".")[0].split("-")[-1] in variants
                 else None
             )
+            print(f"🐞 variant: {variant}")
             # NOTE avoid redundant artifact creation
             if os.path.isfile(f'artifacts/{file.split("/")[-1]}') or os.path.isfile(
                 f"artifacts/{component}--{variant}.html"
@@ -84,6 +86,7 @@ def main(
                     f.write(html)
             else:
                 # NOTE header-wrapper.shtm triggers this condition, for example
+                print(f"🐞 variants: {variants}")
                 for variant in variants:
                     print(f"🐞 variant: {variant}")
                     # reset output by copying html content into it
