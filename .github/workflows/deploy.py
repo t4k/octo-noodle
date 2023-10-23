@@ -33,7 +33,7 @@ def main(
                     p.click("#s-lib-admin-tabs a:text('Custom JS/CSS')")
                     p.click("#s-lg-include-files_link")
                     p.set_input_files("#include_file", item.path)
-                    print("🐞2")
+                    print("🐞css")
                     p.screenshot(path="playwright/screenshot2.png")
                 elif item.name.endswith(".html"):
                     target = item.name.split("-")[0]
@@ -141,6 +141,7 @@ def main(
                                         "#s-lg-btn-save-jscss.btn-success"
                                     )
                     elif target == "header":
+                        print("🐞 header")
                         variant = item.name.split(".")[0].split("-")[-1]
                         if variant == "system":
                             p.goto("/libguides/lookfeel.php?action=0")

@@ -42,6 +42,7 @@ jobs:
         run: |
           # echo "STATUS=$(python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}')" >> $GITHUB_OUTPUT
           python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}'
+      - run: sleep 10
       - run: tree
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
