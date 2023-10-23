@@ -1,0 +1,31 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  playwright:
+    name: 'Playwright Tests'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.39.0-jammy
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest-playwright
+      - name: Run your tests
+        run: pytest --slowmo 100 --video on --output artifacts .github/workflows/playwright.py
+      - run: tree
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-${{ github.sha }}
+          path: artifacts
+  
