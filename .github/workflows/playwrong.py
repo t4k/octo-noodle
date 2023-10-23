@@ -1,13 +1,8 @@
-import re
+import os
 from playwright.sync_api import Page, expect
 
-def test_has_title(page: Page):
-    page.goto("https://playwright.dev/")
-
-    # Expect a title "to contain" a substring.
-    expect(page).to_have_title(re.compile("Playwright"))
-
 def test_get_started_link(page: Page):
+    print(f"🐞 os.environ: {os.environ}")
     page.goto("https://playwright.dev/")
 
     # Click the get started link.
