@@ -21,11 +21,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest-playwright
       - name: Run your tests
-        run: pytest --slowmo 100 --video on --output artifacts .github/workflows/playwright.py
+        run: pytest --slowmo 100 --video on --output artifacts .github/workflows/playwrong.py
       - run: tree
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: playwright-${{ github.sha }}
+          name: playwrong-${{ github.sha }}
           path: artifacts
   
