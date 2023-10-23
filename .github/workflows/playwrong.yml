@@ -21,7 +21,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest-playwright
       - name: Run your tests
-        run: pytest --slowmo 100 --video on --output artifacts -sv .github/workflows/playwrong.py
+        run: HELLO=hola pytest --slowmo 100 --video on --output artifacts -sv .github/workflows/playwrong.py
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
