@@ -17,7 +17,7 @@ def main(
         with sync_playwright() as playwright:
             try:
                 b = playwright.firefox.launch()
-                p = b.new_page(base_url=admin_base_url, record_video_dir="playwright/")
+                p = b.new_page(base_url=admin_base_url, record_video_dir="playwright")
                 p.goto("/libapps/login.php")
                 print("🐞1")
                 p.screenshot(path="playwright/screenshot1.png")
@@ -128,10 +128,10 @@ def main(
                             p.fill("#instmeta", html)
                             p.click("#instmeta ~ button")
                         else:
-                            for group in libguides_groups.split(","):
-                                if variant == group.split(":")[0]:
+                            for group in json.loads(libguides_groups)["groups"]:
+                                if variant == group["slug"]:
                                     p.goto(
-                                        f'/libguides/groups.php?action=3&group_id={group.split(":")[1]}'
+                                        f'/libguides/groups.php?action=3&group_id={group["id"]}'
                                     )
                                     p.fill("#jscss_code", html)
                                     p.click("#s-lg-btn-save-jscss")
@@ -147,11 +147,10 @@ def main(
                             p.click("#banner_html + .btn-primary")
                             # TODO LibAnswers & LibCal
                         else:
-                            for group in libguides_groups.split(","):
-                                if variant == group.split(":")[0]:
-                                    print("🐞", group.split(":")[0])
+                            for group in json.loads(libguides_groups)["groups"]:
+                                if variant == group["slug"]:
                                     p.goto(
-                                        f'/libguides/groups.php?action=2&group_id={group.split(":")[1]}'
+                                        f'/libguides/groups.php?action=2&group_id={group["id"]}'
                                     )
                                     p.fill("#banner_html", html)
                                     p.click("#banner_html + .btn-primary")
@@ -181,10 +180,10 @@ def main(
                             p.fill("#instfooter", html)
                             p.click("#instfooter ~ button")
                         else:
-                            for group in libguides_groups.split(","):
-                                if variant == group.split(":")[0]:
+                            for group in json.loads(libguides_groups)["groups"]:
+                                if variant == group["slug"]:
                                     p.goto(
-                                        f'/libguides/groups.php?action=2&group_id={group.split(":")[1]}'
+                                        f'/libguides/groups.php?action=2&group_id={group["id"]}'
                                     )
                                     p.click("#s-lg-footer_link")
                                     p.fill("#footer_code", html)
