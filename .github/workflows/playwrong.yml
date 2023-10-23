@@ -1,4 +1,4 @@
-name: Playwright No Container
+name: Playwright Only Firefox
 on:
   push:
     branches: [ main, master ]
@@ -19,9 +19,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest-playwright
       - name: Ensure browsers are installed
-        run: python -m playwright install --with-deps
+        run: python -m playwright install --with-deps firefox
       - name: Run your tests
-        run: pytest --slowmo 100 --video on --output artifacts .github/workflows/playwrong.py
+        run: pytest --browser firefox --slowmo 100 --video on --output artifacts .github/workflows/playwrong.py
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
