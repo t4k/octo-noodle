@@ -20,10 +20,6 @@ jobs:
         with:
           python-version: ${{ vars.PYTHON_VERSION }}
       - run: echo "github.sha ${{ github.sha }}"
-      - name: Check inputs
-        id: recompile_scss
-        if: ${{ endsWith(inputs.recompile, '.scss') }}
-        run: echo "SCSS=true" >> "$GITHUB_OUTPUT"
       - name: Check changed files
         id: compile_scss
         if: ${{ ! inputs.recompile }}
@@ -34,6 +30,10 @@ jobs:
               break
             fi
           done
+      - name: Check inputs
+        id: recompile_scss
+        if: ${{ endsWith(inputs.recompile, '.scss') }}
+        run: echo "SCSS=true" >> "$GITHUB_OUTPUT"
       - name: Conditionally install dart-sass
         if: steps.recompile_scss.outputs.SCSS == 'true' || steps.compile_scss.outputs.SCSS == 'true'
         run: |
@@ -42,12 +42,18 @@ jobs:
       - name: Create artifacts directory
         run: mkdir -p artifacts
       - name: Compile artifacts from changed files
+        if: ${{ ! inputs.recompile }}
         env:
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
         run: for f in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }});
           do
             python .github/workflows/compile.py "$f";
           done
+      - name: Recompile artifact from input
+        if: ${{ inputs.recompile }}
+        env:
+          GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
+        run: python .github/workflows/compile.py ${{ inputs.recompile }};
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
