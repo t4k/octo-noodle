@@ -11,7 +11,7 @@ on:
     inputs:
       recompile:
         description: 'Source file to recompile'
-        required: false
+        required: true
         type: string
 
 jobs:
