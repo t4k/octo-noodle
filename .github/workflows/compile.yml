@@ -22,26 +22,20 @@ jobs:
       - run: echo "github.sha ${{ github.sha }}"
       - name: Check inputs
         id: recompile_scss
-        if: ${{ ! endsWith(inputs.recompile, '.scss') }}
-        run: exit 1
-        continue-on-error: true
+        if: ${{ endsWith(inputs.recompile, '.scss') }}
+        run: echo "SCSS=true" >> "$GITHUB_OUTPUT"
       - name: Check changed files
         id: compile_scss
         # if: ${{ github.sha }}
         run: |
-          scss=false
           for f in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}); do
             if [[ "$f" == *".scss" ]]; then
-              scss=true
+              echo "SCSS=true" >> "$GITHUB_OUTPUT"
               break
             fi
           done
-          if [ "$scss" = false ] ; then
-            exit 1
-          fi
-        continue-on-error: true
       - name: Conditionally install dart-sass
-        if: steps.recompile_scss.outcome != 'success' || steps.compile_scss.outcome != 'success'
+        if: steps.recompile_scss.outputs.SCSS == 'true' || steps.compile_scss.outputs.SCSS == 'true'
         run: |
           curl --silent --show-error --location https://github.com/sass/dart-sass/releases/download/${{ vars.DART_SASS_VERSION }}/dart-sass-${{ vars.DART_SASS_VERSION }}-linux-x64.tar.gz | tar --extract --gzip
           mv dart-sass/sass /usr/local/bin
