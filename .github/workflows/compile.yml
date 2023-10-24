@@ -2,7 +2,11 @@ name: Compile Artifacts
 
 on:
     workflow_call:
-
+      inputs:
+        recompile:
+          required: false
+          type: string
+  
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -17,8 +21,6 @@ jobs:
           python-version: ${{ vars.PYTHON_VERSION }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install plac
           curl --silent --show-error --location https://github.com/sass/dart-sass/releases/download/${{ vars.DART_SASS_VERSION }}/dart-sass-${{ vars.DART_SASS_VERSION }}-linux-x64.tar.gz | tar --extract --gzip
           mv dart-sass/sass /usr/local/bin
       - name: Create artifacts directory
