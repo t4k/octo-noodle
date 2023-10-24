@@ -4,6 +4,7 @@ import os
 from playwright.sync_api import Page
 
 
+@pytest.fixture(autouse=True)
 def run(page: Page):
     for item in os.scandir("artifacts"):
         page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libapps/login.php')
