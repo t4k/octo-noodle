@@ -47,9 +47,10 @@ jobs:
           USERNAME: ${{ secrets.ADMIN_USERNAME }}
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
-        run: pytest --slowmo 100 --tracing on --output playwright --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
+        run: pytest --slowmo 100 --tracing on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
+      - run: tree
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: deploy-${{ github.sha }}
-          path: playwright
+          path: test-results
