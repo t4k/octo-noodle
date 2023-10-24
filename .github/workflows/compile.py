@@ -55,6 +55,7 @@ def main(file):
 
     print(f"🐞 os.environ: {os.environ}")
     print(f"🐞 file: {file}")
+    github_commit =  f'{os.environ.get("GITHUB_REPOSITORY")/commit/{os.environ.get("GITHUB_SHA")}}'
 
     if file.endswith(".scss"):
         # NOTE primary scss files do not have named parent directories
