@@ -1,11 +1,11 @@
 name: Compile & Deploy to CMS
 on:
-  push:
-    paths:
-      - "**.scss"
-      - "*.js"
-      - "*.html"
-      - "*.shtm"
+#   push:
+#     paths:
+#       - "**.scss"
+#       - "*.js"
+#       - "*.html"
+#       - "*.shtm"
   workflow_dispatch:
 jobs:
   compile-and-deploy:

@@ -42,12 +42,12 @@ jobs:
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
         run: |
-          echo "STATUS=$(pytest --slowmo 100 --video on --output playwright -sv .github/workflows/deploy.py::deploy)" >> $GITHUB_OUTPUT
+          echo "STATUS=$(pytest --slowmo 100 --video on --output deployment -sv .github/workflows/deploy.py::deploy)" >> $GITHUB_OUTPUT
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: deploy-${{ github.sha }}
-          path: playwright
+          path: deployment
       - name: Check deploy output
         if: ${{ steps.deploy.outputs.STATUS }}
         run: |
