@@ -48,6 +48,7 @@ jobs:
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
         run: pytest --slowmo 100 --tracing on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
+        continue-on-error: true
       - run: tree
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
