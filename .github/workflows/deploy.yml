@@ -47,7 +47,7 @@ jobs:
           USERNAME: ${{ secrets.ADMIN_USERNAME }}
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
-        run: pytest --slowmo 100 --video retain-on-failure --output playwright --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
+        run: pytest --slowmo 100 --tracing on --output playwright --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
