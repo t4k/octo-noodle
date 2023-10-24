@@ -1,9 +1,5 @@
 name: Playwright Tests
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+on: workflow_dispatch
 jobs:
   playwright:
     name: 'Playwright Tests'
@@ -23,7 +19,7 @@ jobs:
       - name: Run your tests
         env:
           SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
-        run: pytest --slowmo 100 --video on --output artifacts -sv .github/workflows/playwrong.py
+        run: pytest --slowmo 100 --video on --output artifacts -sv .github/workflows/playwrong.py::deploy
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
