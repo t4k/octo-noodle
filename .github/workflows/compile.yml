@@ -26,7 +26,7 @@ jobs:
         run: echo "SCSS=true" >> "$GITHUB_OUTPUT"
       - name: Check changed files
         id: compile_scss
-        # if: ${{ github.sha }}
+        if: ${{ ! inputs.recompile }}
         run: |
           for f in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}); do
             if [[ "$f" == *".scss" ]]; then
