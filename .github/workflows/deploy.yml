@@ -42,7 +42,7 @@ jobs:
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
         run: |
-          pytest --slowmo 100 --video on --output playwright -sv .github/workflows/deploy.py::deploy
+          pytest --slowmo 100 --video on --output playwright -sv .github/workflows/deploy.py::run
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:

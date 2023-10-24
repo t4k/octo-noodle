@@ -1,11 +1,10 @@
 import json
 import os
-import sys
 
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 
-def deploy(page: Page):
+def run(page: Page):
     for item in os.scandir("artifacts"):
         page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libapps/login.php')
         page.fill("#s-libapps-email", admin_username)
