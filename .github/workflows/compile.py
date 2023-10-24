@@ -9,7 +9,6 @@ import plac
 
 def main(
     file: "modified file from which to build artifacts",  # type: ignore
-    libguides_groups: '{"groups":[{"slug":"foo","id":"999"},{…}]}',  # type: ignore
     github_commit: ("optional github commit path", "option", "g"),  # type: ignore
 ):
     print(f"🐞 file: {file}")
@@ -63,7 +62,7 @@ def main(
                 f.write(html)
         elif component == "header" or component == "footer":
             # NOTE libguides_groups is set in a GitHub Actions secret
-            slugs = [g["slug"] for g in json.loads(libguides_groups)["groups"]]
+            slugs = [g["slug"] for g in json.loads(os.environ.get("GROUPS"))["groups"]]
             slugs.append("system")
             variants = list(slugs)
             print(f"🐞 variants: {variants}")
