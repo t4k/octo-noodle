@@ -7,6 +7,7 @@ from pathlib import Path
 
 import plac
 
+
 def main(
     file: "modified file from which to build artifacts",  # type: ignore
     github_commit: ("optional github commit path", "option", "g"),  # type: ignore

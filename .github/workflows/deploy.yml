@@ -7,7 +7,6 @@ on:
       - "*.js"
       - "*.html"
       - "*.shtm"
-  workflow_call:
 
 jobs:
   compile:
