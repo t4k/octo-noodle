@@ -53,7 +53,6 @@ def parse_nested_includes(wrapper, variant=None):
 
 def main(file):
 
-    print(f"🐞 os.environ: {os.environ}")
     print(f"🐞 file: {file}")
     github_commit =  f'{os.environ.get("GITHUB_REPOSITORY")}/commit/{os.environ.get("GITHUB_SHA")}'
 
