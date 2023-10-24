@@ -1,4 +1,4 @@
-name: Deploy Artifacts
+name: Deploy Components
 
 on:
   push:
@@ -16,41 +16,40 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: compile
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.39.0-jammy
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 2
       - name: Set up Python 3.x
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install plac playwright
-          playwright install firefox
+          pip install playwright
       - uses: actions/download-artifact@v3
         with:
           name: compile-${{ github.sha }}
           path: artifacts
-      - run: mkdir playwright
-      - name: Deploy artifacts
+      - name: Deploy components
         id: deploy
-        # NOTE: the LIBGUIDES_GROUPS secret must be single-quoted because it
-        # contains JSON like `{"groups":[{"slug":"foo","id":"999"},{…}]}`
+        env:
+          BASE_URL: ${{ secrets.ADMIN_BASE_URL }}
+          USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
         run: |
-          # echo "STATUS=$(python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}')" >> $GITHUB_OUTPUT
-          python .github/workflows/deploy.py ${{ secrets.ADMIN_BASE_URL }} ${{ secrets.ADMIN_USERNAME }} ${{ secrets.ADMIN_PASSWORD }} '${{ secrets.LIBGUIDES_GROUPS }}'
-      - run: sleep 10
-      - run: tree
+          echo "STATUS=$(pytest --slowmo 100 --video on --output playwright -sv .github/workflows/deploy.py::deploy)" >> $GITHUB_OUTPUT
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: deploy-${{ github.sha }}
           path: playwright
-      # - name: Check deploy output
-      #   if: ${{ steps.deploy.outputs.STATUS }}
-      #   run: |
-      #     echo ${{ steps.deploy.outputs.STATUS }}
-      #     exit 1
+      - name: Check deploy output
+        if: ${{ steps.deploy.outputs.STATUS }}
+        run: |
+          echo ${{ steps.deploy.outputs.STATUS }}
+          exit 1
