@@ -49,8 +49,7 @@ jobs:
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
         run: pytest --slowmo 100 --tracing on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
         continue-on-error: true
-      - run: apt-get install -y tree
-      - run: tree
+      - run: ls && ls test-results/
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
