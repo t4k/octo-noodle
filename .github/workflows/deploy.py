@@ -6,9 +6,9 @@ from playwright.sync_api import Page
 
 def test_deploy(page: Page):
     for item in os.scandir("artifacts"):
-        page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libapps/login.php')
-        page.fill("#s-libapps-email", admin_username)
-        page.fill("#s-libapps-password", admin_password)
+        page.goto('/libapps/login.php')
+        page.fill("#s-libapps-email", os.environ.get("USERNAME"))
+        page.fill("#s-libapps-password", os.environ.get("PASSWORD"))
         page.click("#s-libapps-login-button")
         page.click("#s-lib-app-anchor")
         page.click("#s-lib-app-menu a:text('LibGuides')")
@@ -87,7 +87,7 @@ def test_deploy(page: Page):
             elif target == "head":
                 variant = item.name.split(".")[0].split("-")[-1]
                 if variant == "system":
-                    page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libguides/lookfeel.php?action=1')
+                    page.goto('/libguides/lookfeel.php?action=1')
                     page.fill("#jscss_code", html)
                     page.click("#s-lg-btn-save-jscss")
                     # NOTE must wait for success before moving on
@@ -112,10 +112,10 @@ def test_deploy(page: Page):
                     page.fill("#instmeta", html)
                     page.click("#instmeta ~ button")
                 else:
-                    for group in json.loads(libguides_groups)["groups"]:
+                    for group in json.loads(os.environ.get("GROUPS"))["groups"]:
                         if variant == group["slug"]:
                             page.goto(
-                                f'{os.environ.get("BASE_URL").rstrip("/")}/libguides/groups.php?action=3&group_id={group["id"]}'
+                                f'/libguides/groups.php?action=3&group_id={group["id"]}'
                             )
                             page.fill("#jscss_code", html)
                             page.click("#s-lg-btn-save-jscss")
@@ -126,15 +126,15 @@ def test_deploy(page: Page):
             elif target == "header":
                 variant = item.name.split(".")[0].split("-")[-1]
                 if variant == "system":
-                    page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libguides/lookfeel.php?action=0')
+                    page.goto('/libguides/lookfeel.php?action=0')
                     page.fill("#banner_html", html)
                     page.click("#banner_html + .btn-primary")
                     # TODO LibAnswers & LibCal
                 else:
-                    for group in json.loads(libguides_groups)["groups"]:
+                    for group in json.loads(os.environ.get("GROUPS"))["groups"]:
                         if variant == group["slug"]:
                             page.goto(
-                                f'{os.environ.get("BASE_URL").rstrip("/")}/libguides/groups.php?action=2&group_id={group["id"]}'
+                                f'/libguides/groups.php?action=2&group_id={group["id"]}'
                             )
                             page.fill("#banner_html", html)
                             page.click("#banner_html + .btn-primary")
@@ -143,7 +143,7 @@ def test_deploy(page: Page):
             elif target == "footer":
                 variant = item.name.split(".")[0].split("-")[-1]
                 if variant == "system":
-                    page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libguides/lookfeel.php?action=0')
+                    page.goto('/libguides/lookfeel.php?action=0')
                     page.click("#s-lg-footer_link")
                     page.fill("#footer_code", html)
                     page.click("#s-lg-btn-save-footer")
@@ -163,10 +163,10 @@ def test_deploy(page: Page):
                     page.fill("#instfooter", html)
                     page.click("#instfooter ~ button")
                 else:
-                    for group in json.loads(libguides_groups)["groups"]:
+                    for group in json.loads(os.environ.get("GROUPS"))["groups"]:
                         if variant == group["slug"]:
                             page.goto(
-                                f'{os.environ.get("BASE_URL").rstrip("/")}/libguides/groups.php?action=2&group_id={group["id"]}'
+                                f'/libguides/groups.php?action=2&group_id={group["id"]}'
                             )
                             page.click("#s-lg-footer_link")
                             page.fill("#footer_code", html)

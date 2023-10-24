@@ -37,11 +37,10 @@ jobs:
       - name: Deploy components
         id: deploy
         env:
-          BASE_URL: ${{ secrets.ADMIN_BASE_URL }}
           USERNAME: ${{ secrets.ADMIN_USERNAME }}
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
-        run: pytest --slowmo 100 --video on --output playwright -sv .github/workflows/deploy.py
+        run: pytest --slowmo 100 --video on --output playwright --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
