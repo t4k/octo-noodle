@@ -1,13 +1,10 @@
 import json
 import os
 
-import pytest
-
 from playwright.sync_api import Page
 
 
-@pytest.fixture(autouse=True)
-def deploy(page: Page):
+def test_deploy(page: Page):
     for item in os.scandir("artifacts"):
         page.goto(f'{os.environ.get("BASE_URL").rstrip("/")}/libapps/login.php')
         page.fill("#s-libapps-email", admin_username)
