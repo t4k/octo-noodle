@@ -138,7 +138,7 @@ def test_deploy(page: Page):
                             page.fill("#banner_html", html)
                             page.click("#banner_html + .btn-primary")
                             # NOTE must wait for success before moving on
-                            page.wait_for_selector("#DEBUG + .btn-success")
+                            page.wait_for_selector("#banner_html + .btn-success")
             elif target == "footer":
                 variant = item.name.split(".")[0].split("-")[-1]
                 if variant == "system":
