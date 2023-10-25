@@ -47,7 +47,7 @@ jobs:
           USERNAME: ${{ secrets.ADMIN_USERNAME }}
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
-        run: pytest --slowmo 100 --tracing on --video on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
+        run: pytest --slowmo 100 --video on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
         continue-on-error: true
       - run: ls && ls test-results/github-workflows-deploy-py-test-deploy-chromium/
       - name: Upload trace
@@ -55,3 +55,5 @@ jobs:
         with:
           name: deploy-trace-${{ github.sha }}
           path: test-results
+      - if: ${{ failure() }}
+        run: exit 1
