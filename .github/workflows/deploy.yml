@@ -55,5 +55,5 @@ jobs:
         with:
           name: deploy-video-${{ github.sha }}
           path: test-results/github-workflows-deploy-py-test-deploy-chromium
-      - if: ${{ failure() }}
+      - if: steps.deploy.outcome != 'success'
         run: exit 1
