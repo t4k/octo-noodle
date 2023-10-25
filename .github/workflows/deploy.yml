@@ -50,10 +50,10 @@ jobs:
         run: pytest --slowmo 100 --video on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
         continue-on-error: true
       - run: ls && ls test-results/github-workflows-deploy-py-test-deploy-chromium/
-      - name: Upload trace
+      - name: Upload video
         uses: actions/upload-artifact@v3
         with:
-          name: deploy-trace-${{ github.sha }}
-          path: test-results
+          name: deploy-video-${{ github.sha }}
+          path: test-results/github-workflows-deploy-py-test-deploy-chromium
       - if: ${{ failure() }}
         run: exit 1
