@@ -25,6 +25,7 @@ jobs:
     needs: compile
     container:
       image: mcr.microsoft.com/playwright/python:v${{ vars.PLAYWRIGHT_VERSION }}
+      options: --user 1001
     steps:
       - uses: actions/checkout@v3
         with:
@@ -35,8 +36,8 @@ jobs:
           python-version: ${{ vars.PYTHON_VERSION }}
       - name: Install dependencies
         run: |
-          pip install --user pipenv
-          pipenv install playwright==${{ vars.PLAYWRIGHT_VERSION }} pytest-playwright
+          python -m pip install --upgrade pip
+          pip install playwright==${{ vars.PLAYWRIGHT_VERSION }} pytest-playwright
       - uses: actions/download-artifact@v3
         with:
           name: compile-${{ github.sha }}
@@ -47,7 +48,7 @@ jobs:
           USERNAME: ${{ secrets.ADMIN_USERNAME }}
           PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           GROUPS: ${{ secrets.LIBGUIDES_GROUPS }}
-        run: pipenv run pytest --slowmo 100 --video on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
+        run: pytest --slowmo 100 --video on --base-url ${{ secrets.ADMIN_BASE_URL }} -sv .github/workflows/deploy.py
         continue-on-error: true
       - name: Upload video
         uses: actions/upload-artifact@v3
